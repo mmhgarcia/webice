@@ -3,10 +3,29 @@ fetch('data.json')
   .then(data => {
     const container = document.getElementById('cards-container');
     data.forEach(item => {
+
       if (item.stock === 0) return;
+
       const card = document.createElement('div');
+
       card.style.width = 'auto';
       card.style.height = 'auto';
+
+      // Add a message bar at the bottom of the screen
+      const messageBar = document.createElement('div');
+      messageBar.textContent = 'Toca una tarjeta para ver la imagen.';
+      messageBar.style.position = 'fixed';
+      messageBar.style.bottom = '0';
+      messageBar.style.left = '0';
+      messageBar.style.width = '100%';
+      messageBar.style.backgroundColor = '#333';
+      messageBar.style.color = '#fff';
+      messageBar.style.textAlign = 'center';
+      messageBar.style.padding = '10px';
+      messageBar.style.fontSize = '14px';
+      messageBar.style.zIndex = '1000';
+
+      document.body.appendChild(messageBar);
       card.className = 'card';
       card.innerHTML = `        
         <h3>${item.sabor}</h3>
