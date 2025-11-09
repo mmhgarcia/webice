@@ -7,6 +7,16 @@ fetch('data.json')
       const card = document.createElement('div');
       card.style.width = 'auto';
       card.style.height = 'auto';
+      
+      const avatar = document.createElement('img');
+      avatar.src = `avatars/${item.avatar}`; // Assuming `item.avatar` contains the avatar filename
+      avatar.alt = `${item.sabor} avatar`;
+      avatar.style.width = '50px';
+      avatar.style.height = '50px';
+      avatar.style.borderRadius = '50%';
+      avatar.style.marginBottom = '10px';
+      card.appendChild(avatar);
+
       card.className = 'card';
       card.innerHTML = `        
         <h3>${item.sabor}</h3>
