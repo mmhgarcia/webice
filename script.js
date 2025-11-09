@@ -17,11 +17,9 @@ fetch('data.json')
       messageBar.style.position = 'fixed';
       messageBar.style.bottom = '0';
       messageBar.style.left = '0';
-      messageBar.style.backgroundColor = '#90EE90'; // Light green background
-      messageBar.style.color = '#000'; // Black text
+      messageBar.style.backgroundColor = '#333'; // Dark background
+      messageBar.style.color = '#fff'; // White text
       messageBar.style.width = '100%';
-      messageBar.style.backgroundColor = '#333';
-      messageBar.style.color = '#fff';
       messageBar.style.textAlign = 'center';
       messageBar.style.padding = '10px';
       messageBar.style.fontSize = '14px';
