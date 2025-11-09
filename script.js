@@ -7,6 +7,7 @@ fetch('data.json')
       const card = document.createElement('div');
       card.style.width = '300px';
       card.style.height = '300px';
+      card.style.margin = '0 auto';
       card.style.overflow = 'hidden';
       card.className = 'card';
       card.innerHTML = `
