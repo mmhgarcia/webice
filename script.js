@@ -5,8 +5,8 @@ fetch('data.json')
     data.forEach(item => {
       if (item.stock === 0) return;
       const card = document.createElement('div');
-      card.style.width = '300px';
-      card.style.height = '300px';
+      card.style.width = 'auto';
+      card.style.height = 'auto';
       card.style.margin = '0 auto';
       card.style.overflow = 'hidden';
       const img = document.createElement('img');
