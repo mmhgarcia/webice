@@ -9,6 +9,12 @@ fetch('data.json')
       card.style.height = '300px';
       card.style.margin = '0 auto';
       card.style.overflow = 'hidden';
+      const img = document.createElement('img');
+      img.src = `img/${item.imagename}`;
+      img.alt = item.sabor;
+      img.style.width = '100%';
+      img.style.height = 'auto';
+      card.appendChild(img);
       card.className = 'card';
       card.innerHTML = `
         <img src="img/${item.imagename}" alt="${item.sabor}">
