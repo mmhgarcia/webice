@@ -14,7 +14,11 @@ fetch('data.json')
       avatar.style.width = '50px';
       avatar.style.height = '50px';
       avatar.style.borderRadius = '50%';
+
+      avatar.style.float = 'left';
+      avatar.style.marginRight = '10px';
       avatar.style.marginBottom = '10px';
+      
       card.appendChild(avatar);
 
       card.className = 'card';
