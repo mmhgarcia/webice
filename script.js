@@ -29,7 +29,7 @@ fetch('data.json')
         modal.style.zIndex = '1000';
 
         const image = document.createElement('img');
-        image.src = item.imagename; // Assuming `item.image` contains the image URL
+        image.src = "img/${item.imagename}"; // Assuming `item.image` contains the image URL
         image.style.maxWidth = '90%';
         image.style.maxHeight = '90%';
 
