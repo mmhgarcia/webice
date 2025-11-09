@@ -13,6 +13,43 @@ fetch('data.json')
         <p>Código: ${item.codigo}</p>
         <div class="stock">Stock: ${item.stock}</div>
       `;
+
+      card.addEventListener('click', () => {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100%';
+        modal.style.height = '100%';
+        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        modal.style.display = 'flex';
+        modal.style.justifyContent = 'center';
+        modal.style.alignItems = 'center';
+        modal.style.zIndex = '1000';
+
+        const image = document.createElement('img');
+        image.src = item.image; // Assuming `item.image` contains the image URL
+        image.style.maxWidth = '90%';
+        image.style.maxHeight = '90%';
+
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Cerrar';
+        closeButton.style.position = 'absolute';
+        closeButton.style.top = '20px';
+        closeButton.style.right = '20px';
+        closeButton.style.padding = '10px 20px';
+        closeButton.style.fontSize = '16px';
+        closeButton.style.cursor = 'pointer';
+
+        closeButton.addEventListener('click', () => {
+          document.body.removeChild(modal);
+        });
+
+        modal.appendChild(image);
+        modal.appendChild(closeButton);
+        document.body.appendChild(modal);
+      });
       container.appendChild(card);
     });
   })
