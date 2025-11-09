@@ -2,5 +2,11 @@
   {"id": 1, "codigo": "H001", "sabor": "Chocolate", "stock": 9, "imagename": "chocolate.jpg"},
   {"id": 2, "codigo": "H002", "sabor": "Fresa", "stock": 9, "imagename": "fresa.jpg"},
   {"id": 3, "codigo": "H003", "sabor": "Vainilla", "stock": 15, "imagename": "vainilla.jpg"},
-  {"id": 4, "codigo": "H004", "sabor": "Menta", "stock": 5, "imagename": "menta.jpg"}
+  {"id": 4, "codigo": "H004", "sabor": "Menta", "stock": 5, "imagename": "menta.jpg"},
+  {"id": 5, "codigo": "H005", "sabor": "", "stock": 7, "imagename": "dulcedeleche.jpg"},
+  {"id": 6, "codigo": "H005", "sabor": "", "stock": 7, "imagename": "dulcedeleche.jpg"},
+  {"id": 7, "codigo": "H005", "sabor": "", "stock": 7, "imagename": "dulcedeleche.jpg"},
+  {"id": 8, "codigo": "H006", "sabor": "Cookies & Cream", "stock": 12, "imagename": "cookiescream.jpg"},
+  {"id": 9, "codigo": "H007", "sabor": "Pistacho", "stock": 4, "imagename": "pistacho.jpg"},
+  {"id": 10, "codigo": "H008", "sabor": "Limon", "stock": 6, "imagename": "limon.jpg"}  
 ]
