@@ -8,7 +8,8 @@ fetch('data.json')
       card.style.width = 'auto';
       card.style.height = 'auto';
       card.className = 'card';
-      card.innerHTML = `        
+      card.innerHTML = `
+        <img src="img/${item.imagename}" alt="${item.sabor}">
         <h3>${item.sabor}</h3>
         <p>Código: ${item.codigo}</p>
         <div class="stock">Stock: ${item.stock}</div>

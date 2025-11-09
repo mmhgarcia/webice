@@ -3,90 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prueba de Imagen en Box</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      align-items: flex-start;
-      margin-top: 40px;
-      background-color: #f9fafc;
-    }
-
-    .box {
-      width: 300px;
-      height: 300px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      overflow: hidden;
-      background-color: #fff;
-      text-align: center;
-    }
-
-    .box img {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .cover img {
-      object-fit: cover;
-    }
-
-    .contain img {
-      object-fit: contain;
-      background-color: #f3f3f3;
-    }
-
-    .background {
-      background-image: url('https://picsum.photos/600/400');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    h3 {
-      margin-bottom: 0px;      
-      font-size: 1rem;      
-    }
-
-    .div2{
-      margin-bottom: 8px;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 2px solid red;
-    }
-  </style>
+  <title>Heladería Chester</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <h1>🍦 Heladería Chester 🍦</h1>
+    <p>Sabores que alegran tu día.</p>
+  </header>
 
+  <main>
+    <div id="cards-container" class="grid"></div>
+  </main>
 
-  <div class="container">
-    <h3>object-fit: contain</h3>
-    <div class="box contain">
-      <img src="https://picsum.photos/600/400" alt="Ejemplo contain">
-    </div>
-  </div>
+  <footer>
+    <p>© 2025 Heladería Chester — TDR</p>
+  </footer>
 
-  <div class="container">
-    <div class="div2">object-fit: cover<div>
-    <div class="div2">Codigo: 1</div>
-    <div class="div2">Styock: 10</div>
-    <div class="box cover">
-      <img src="img/1.jpg" alt="Ejemplo cover">
-    </div>
-  </div>
-
-  <div class="container">
-    <h3>background-image (cover)</h3>
-    <div class="box background"></div>
-  </div>
-
+  <script src="script.js"></script>
 </body>
 </html>
