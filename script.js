@@ -7,9 +7,9 @@ fetch('data.json')
       const card = document.createElement('div');
       card.style.width = 'auto';
       card.style.height = 'auto';
-      
+
       const avatar = document.createElement('img');
-      avatar.src = `avatars/${item.avatar}`; // Assuming `item.avatar` contains the avatar filename
+      avatar.src = `img/${item.imagename}`; // Assuming `item.avatar` contains the avatar filename
       avatar.alt = `${item.sabor} avatar`;
       avatar.style.width = '50px';
       avatar.style.height = '50px';
