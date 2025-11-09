@@ -3,7 +3,7 @@
   {"id": 2, "codigo": "2", "sabor": "PIÑA CREMOSA", "stock": 9, "imagename": "fresa.jpg"},
   {"id": 3, "codigo": "3", "sabor": "DURAZNO CREMOSO", "stock": 15, "imagename": "vainilla.jpg"},
   {"id": 4, "codigo": "4", "sabor": "FRESA CREMOSA", "stock": 5, "imagename": "menta.jpg"},
-  {"id": 5, "codigo": "5", "sabor": "GUANABANA", "stock": 7, "imagename": "dulcedeleche.jpg"},
+  {"id": 5, "codigo": "5", "sabor": "GUANA-GUANA", "stock": 7, "imagename": "dulcedeleche.jpg"},
   {"id": 6, "codigo": "6", "sabor": "OREO CREMITA", "stock": 7, "imagename": "dulcedeleche.jpg"},
   {"id": 7, "codigo": "7", "sabor": "PIE PARCHITA", "stock": 7, "imagename": "dulcedeleche.jpg"},
   {"id": 8, "codigo": "8", "sabor": "PIE NARANJA", "stock": 12, "imagename": "cookiescream.jpg"},
