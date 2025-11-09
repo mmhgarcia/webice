@@ -7,20 +7,11 @@ fetch('data.json')
       const card = document.createElement('div');
       card.style.width = 'auto';
       card.style.height = 'auto';
-      card.style.margin = '0 auto';
-      card.style.display = 'flex';
-      card.style.justifyContent = 'center';
-      card.style.alignItems = 'center';
-      card.style.width = '300px';
-      card.style.height = '300px';
-      card.style.overflow = 'hidden';
       img.style.objectFit = 'contain';
-      card.style.overflow = 'hidden';
+      img.style.objectFit = 'fill';
       const img = document.createElement('img');
       img.src = `img/${item.imagename}`;
       img.alt = item.sabor;
-      img.style.width = '100%';
-      img.style.height = 'auto';
       card.appendChild(img);
       card.className = 'card';
       card.innerHTML = `
