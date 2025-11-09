@@ -3,6 +3,7 @@ fetch('data.json')
   .then(data => {
     const container = document.getElementById('cards-container');
     data.forEach(item => {
+      if (item.stock === 0) return;
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
