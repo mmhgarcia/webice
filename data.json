@@ -1,5 +1,5 @@
 [
-  {"id": 1, "codigo": "1", "sabor": "PARCHITA CREMOSA", "stock": 9, "imagename": "chocolate.jpg"},
+  {"id": 1, "codigo": "1", "sabor": "PARCHITA CREMOSA", "stock": 9, "imagename": "1.jpg"},
   {"id": 2, "codigo": "2", "sabor": "PIÑA CREMOSA", "stock": 9, "imagename": "fresa.jpg"},
   {"id": 3, "codigo": "3", "sabor": "DURAZNO CREMOSO", "stock": 15, "imagename": "vainilla.jpg"},
   {"id": 4, "codigo": "4", "sabor": "FRESA CREMOSA", "stock": 5, "imagename": "menta.jpg"},
