@@ -7,12 +7,6 @@ fetch('data.json')
       const card = document.createElement('div');
       card.style.width = 'auto';
       card.style.height = 'auto';
-      img.style.objectFit = 'contain';
-      img.style.objectFit = 'fill';
-      const img = document.createElement('img');
-      img.src = `img/${item.imagename}`;
-      img.alt = item.sabor;
-      card.appendChild(img);
       card.className = 'card';
       card.innerHTML = `
         <img src="img/${item.imagename}" alt="${item.sabor}">
