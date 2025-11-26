@@ -1,25 +1,115 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heladería Chester</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo Responsive</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* GRID */
+        .catalogo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.15s;
+        }
+
+        .item:hover {
+            transform: scale(1.03);
+        }
+
+        .item img {
+            width: 100%;
+            border-radius: 6px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .titulo {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .precio {
+            color: #2c7;
+            font-size: 0.95rem;
+            margin-top: 6px;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>🍦 Heladería Chester 🍦</h1>
-    <p>Sabores que alegran tu día.</p>
-  </header>
 
-  <main>
-    <div id="cards-container" class="grid"></div>
-  </main>
+<h1>Catálogo de Productos</h1>
 
-  <footer>
-    <p>© 2025 Heladería Chester — TDR</p>
-  </footer>
+<div id="catalogo" class="catalogo"></div>
 
-  <script src="script.js"></script>
+<!-- ============ JSON simulado con 5 productos ============ -->
+<script id="data-json" type="application/json">
+{
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "Guana-Guana",
+      "precio": 0.7,
+      "imagen": "./outputs/small/guanaguana_400.webp"
+    },
+    {
+      "id": 2,
+      "nombre": "Fresa",
+      "precio": 0.5,
+      "imagen": "./outputs/small/fresa_400.webp"
+    }
+  ]
+}
+</script>
+
+<!-- ============ JavaScript que renderiza el catálogo ============ -->
+<script>
+    // Tomar el JSON embebido
+    const data = JSON.parse(document.getElementById("data-json").textContent);
+    const catalogoDiv = document.getElementById("catalogo");
+
+    function renderCatalogo() {
+        data.productos.forEach(producto => {
+            const item = document.createElement("div");
+            item.className = "item";
+
+            item.innerHTML = `
+                <picture>
+                    <source srcset="${producto.imagen}" type="image/webp" />
+                    <img src="${producto.imagen.replace('.webp','.jpg')}" alt="${producto.nombre}">
+                </picture>
+
+                <div class="titulo">${producto.nombre}</div>
+                <div class="precio">$${producto.precio.toFixed(2)}</div>
+            `;
+
+            catalogoDiv.appendChild(item);
+        });
+    }
+
+    renderCatalogo();
+</script>
+
 </body>
 </html>
