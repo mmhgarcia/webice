@@ -16,58 +16,146 @@
         h1 {
             text-align: center;
             margin-bottom: 20px;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* Contenedor de filtros */
+        .filtros {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .filtro-btn {
+            padding: 12px 24px;
+            background: #fff;
+            border: 2px solid #4CAF50;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .filtro-btn:hover {
+            background: #f0f9f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .filtro-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #45a049;
+        }
+
+        /* Encabezados de grupo */
+        .grupo-header {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0 15px 0;
+            font-size: 1.4rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         /* GRID */
         .catalogo {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
 
         .item {
             background: white;
-            padding: 12px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            transition: transform 0.15s;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .item:hover {
-            transform: scale(1.03);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
 
         .item img {
             width: 100%;
-            border-radius: 6px;
+            height: 160px;
+            border-radius: 8px;
             display: block;
             object-fit: cover;
+            margin-bottom: 10px;
         }
 
         .titulo {
-            margin-top: 10px;
+            margin-top: auto;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.4;
         }
 
-        .precio {
-            color: #2c7;
-            font-size: 0.95rem;
-            margin-top: 6px;
+        .id-producto {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .mensaje-vacio {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            color: #666;
         }
     </style>
 
 </head>
 <body>
 
-<h2>Natu Helados - Ice Cream</h2>
+<h1>Natu Helados</h1>
+<h2>Ice Cream & Desserts</h2>
+
+<!-- Filtros -->
+<div class="filtros">
+    <button class="filtro-btn active" data-grupo="Todos">🍦 TODOS</button>
+    <button class="filtro-btn" data-grupo="Cremoso">🍨 CREMOSOS</button>
+    <button class="filtro-btn" data-grupo="FullCremoso">🎂 FULL CREMOSOS</button>
+    <button class="filtro-btn" data-grupo="Premium">⭐ PREMIUM</button>
+</div>
 
 <div id="catalogo" class="catalogo"></div>
 
 <script>
-  document.addEventListener("contextmenu", function (e) {
-    e.preventDefault();
-  });
+    document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+    });
 </script>
 
 <!-- ============ JSON válido con strings ============ -->
@@ -272,43 +360,106 @@
     // Tomar el JSON embebido
     const data = JSON.parse(document.getElementById("data-json").textContent);
     const catalogoDiv = document.getElementById("catalogo");
-
-    function renderCatalogo() {
-      // Ordenar los productos por grupo en orden ascendente
-      const productosOrdenados = data.productos
-        .filter(producto => producto.stock > 0)
-        .sort((a, b) => a.grupo.localeCompare(b.grupo));
-
-      // Segregar los productos por grupo
-      let currentGroup = null;
-
-      productosOrdenados.forEach(producto => {
-        // Si el grupo cambia, agregar un encabezado para el nuevo grupo
-        if (producto.grupo !== currentGroup) {
-          currentGroup = producto.grupo;
-          const groupHeader = document.createElement("h3");
-          groupHeader.textContent = `Grupo: ${currentGroup}`;
-          catalogoDiv.appendChild(groupHeader);
+    let filtroActual = "Todos";
+    
+    // Obtener todos los productos con stock > 0
+    const productosConStock = data.productos.filter(producto => producto.stock > 0);
+    
+    // Función para renderizar el catálogo con filtro
+    function renderCatalogo(filtro = "Todos") {
+        filtroActual = filtro;
+        
+        // Limpiar catálogo
+        catalogoDiv.innerHTML = "";
+        
+        // Actualizar botones activos
+        document.querySelectorAll('.filtro-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.grupo === filtro) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Filtrar productos según el filtro seleccionado
+        let productosFiltrados;
+        if (filtro === "Todos") {
+            productosFiltrados = productosConStock;
+        } else {
+            productosFiltrados = productosConStock.filter(producto => producto.grupo === filtro);
         }
-
-        // Crear el elemento del producto
-        const item = document.createElement("div");
-        item.className = "item";
-
-        item.innerHTML = `
-          <picture>
-            <source srcset="${producto.imagen}" type="image/webp" />
-            <img src="${producto.imagen.replace('.webp','.jpg')}" alt="${producto.nombre}">
-          </picture>
-          
-          <div class="titulo">#${producto.id} - ${producto.nombre}</div>
-        `;
-
-        catalogoDiv.appendChild(item);
-      });
+        
+        // Si no hay productos con el filtro actual
+        if (productosFiltrados.length === 0) {
+            const mensaje = document.createElement('div');
+            mensaje.className = 'mensaje-vacio';
+            mensaje.textContent = `No hay productos disponibles en el grupo ${filtro}`;
+            catalogoDiv.appendChild(mensaje);
+            return;
+        }
+        
+        // Ordenar por grupo (solo si es "Todos")
+        if (filtro === "Todos") {
+            productosFiltrados.sort((a, b) => a.grupo.localeCompare(b.grupo));
+        }
+        
+        // Variables para controlar encabezados de grupo
+        let currentGroup = null;
+        
+        productosFiltrados.forEach(producto => {
+            // Si estamos mostrando "Todos", agregar encabezado de grupo cuando cambia
+            if (filtro === "Todos" && producto.grupo !== currentGroup) {
+                currentGroup = producto.grupo;
+                const groupHeader = document.createElement("div");
+                groupHeader.className = "grupo-header";
+                
+                // Personalizar según el grupo
+                let icono = "";
+                if (currentGroup === "Cremoso") icono = "🍨";
+                else if (currentGroup === "FullCremoso") icono = "🎂";
+                else if (currentGroup === "Premium") icono = "⭐";
+                else if (currentGroup === "Ninguno") icono = "❓";
+                
+                groupHeader.textContent = `${icono} ${currentGroup} ${icono}`;
+                catalogoDiv.appendChild(groupHeader);
+            }
+            
+            // Crear el elemento del producto
+            const item = document.createElement("div");
+            item.className = "item";
+            
+            // Determinar emoji según grupo (solo para visualización en el producto)
+            let grupoEmoji = "";
+            if (producto.grupo === "Cremoso") grupoEmoji = "🍨";
+            else if (producto.grupo === "FullCremoso") grupoEmoji = "🎂";
+            else if (producto.grupo === "Premium") grupoEmoji = "⭐";
+            else if (producto.grupo === "Ninguno") grupoEmoji = "❓";
+            
+            item.innerHTML = `
+                <picture>
+                    <source srcset="${producto.imagen}" type="image/webp" />
+                    <img src="${producto.imagen.replace('.webp','.jpg')}" alt="${producto.nombre}">
+                </picture>
+                
+                <div class="titulo">
+                    <span class="id-producto">#${producto.id}</span>
+                    ${grupoEmoji} ${producto.nombre}
+                </div>
+            `;
+            
+            catalogoDiv.appendChild(item);
+        });
     }
-
-    renderCatalogo();
+    
+    // Configurar eventos de los botones de filtro
+    document.querySelectorAll('.filtro-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const grupo = this.dataset.grupo;
+            renderCatalogo(grupo);
+        });
+    });
+    
+    // Renderizar inicialmente con filtro "Todos"
+    renderCatalogo("Todos");
 </script>
 
 </body>
