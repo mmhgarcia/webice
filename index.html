@@ -60,7 +60,7 @@
 
         /* Encabezados de grupo */
         .grupo-header {
-            grid-column: 1 / -1;
+            width: 100%;
             background: linear-gradient(135deg, #4CAF50, #45a049);
             color: white;
             padding: 15px 20px;
@@ -75,17 +75,18 @@
             border: 3px solid white;
         }
 
-        /* GRID con espaciado claramente visible */
+        /* Contenedor principal del catálogo */
         .catalogo {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 35px;
-            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 0; /* Sin gap entre items, solo márgenes individuales */
+            padding: 10px 0;
             background: #f0f0f0;
             border-radius: 12px;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
 
+        /* Tarjetas con ancho 100% y márgenes de 50px */
         .item {
             background: white;
             padding: 20px;
@@ -94,9 +95,10 @@
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-            height: 100%;
             border: 2px solid #e0e0e0;
-            overflow: hidden; /* Para que las imágenes no se salgan */
+            overflow: hidden;
+            margin: 50px; /* MARGEN DE 50px EN LOS 4 LADOS */
+            width: calc(100% - 100px); /* Ancho 100% menos los 50px de cada lado */
         }
 
         .item:hover {
@@ -115,13 +117,11 @@
             background: #f9f9f9;
         }
 
-        /* Mantener proporción 1:1 (cuadrado) o 4:3 para las imágenes */
+        /* Mantener proporción 1:1 (cuadrado) */
         .imagen-container::before {
             content: '';
             display: block;
             padding-top: 100%; /* Proporción 1:1 (cuadrado) */
-            /* Para proporción 4:3 usar: padding-top: 75%; */
-            /* Para proporción 16:9 usar: padding-top: 56.25%; */
         }
 
         .item img {
@@ -146,7 +146,7 @@
             color: #333;
             line-height: 1.4;
             padding: 5px 0;
-            min-height: 60px; /* Altura mínima para uniformidad */
+            min-height: 60px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -172,14 +172,14 @@
         }
 
         .mensaje-vacio {
-            grid-column: 1 / -1;
+            width: calc(100% - 100px); /* Igual que las tarjetas */
             text-align: center;
             padding: 50px;
             background: white;
             border-radius: 12px;
             font-size: 1.2rem;
             color: #666;
-            margin: 40px 0;
+            margin: 50px; /* MARGEN DE 50px EN LOS 4 LADOS */
             border: 2px dashed #ddd;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
@@ -198,13 +198,16 @@
 
         /* Ajustes responsivos */
         @media (max-width: 768px) {
-            .catalogo {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 25px;
+            .item {
+                margin: 40px; /* Reducir márgenes en tablet */
+                width: calc(100% - 80px); /* Ajustar ancho */
+                padding: 15px;
             }
             
-            .item {
-                padding: 15px;
+            .mensaje-vacio {
+                margin: 40px;
+                width: calc(100% - 80px);
+                padding: 40px;
             }
             
             .titulo {
@@ -225,17 +228,20 @@
         }
 
         @media (max-width: 480px) {
-            .catalogo {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-                gap: 20px;
-            }
-            
             .item {
+                margin: 25px; /* Reducir márgenes en móviles */
+                width: calc(100% - 50px); /* Ajustar ancho */
                 padding: 12px;
             }
             
+            .mensaje-vacio {
+                margin: 25px;
+                width: calc(100% - 50px);
+                padding: 30px;
+            }
+            
             .imagen-container::before {
-                padding-top: 100%; /* Mantener cuadrado en móviles */
+                padding-top: 100%;
             }
             
             .titulo {
@@ -256,16 +262,25 @@
                 padding: 8px 16px;
                 font-size: 0.85rem;
             }
+            
+            .grupo-header {
+                margin: 25px 0 15px 0;
+                padding: 10px 12px;
+                font-size: 1.1rem;
+            }
         }
 
         @media (max-width: 360px) {
-            .catalogo {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 15px;
+            .item {
+                margin: 20px; /* Márgenes mínimos */
+                width: calc(100% - 40px);
+                padding: 10px;
             }
             
-            .item {
-                padding: 10px;
+            .mensaje-vacio {
+                margin: 20px;
+                width: calc(100% - 40px);
+                padding: 20px;
             }
             
             .titulo {
