@@ -113,7 +113,7 @@
             position: relative;
             overflow: hidden;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 7.5px; /* Reducido de 15px a 7.5px */
             background: #f9f9f9;
         }
 
@@ -133,6 +133,7 @@
             object-fit: contain; /* Mantiene la proporción sin recortar */
             display: block;
             transition: transform 0.3s ease;
+            padding-top: 30px; /* Agregado 30px de padding superior */
         }
 
         .item:hover img {
@@ -153,7 +154,9 @@
         }
 
         .id-producto {
-            display: inline-block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background: #4CAF50;
             color: white;
             padding: 4px 10px;
