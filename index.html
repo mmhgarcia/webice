@@ -779,6 +779,7 @@
 
     function grabarTasa() {
         const tasa = document.getElementById('tasa-bcv').value;
+        localStorage.setItem('tasa', tasa); // Guardar en localStorage con la clave "tasa"
         alert(`Tasa BCV grabada: ${tasa}`);
         cerrarModal();
     }
