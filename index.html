@@ -635,13 +635,16 @@
             document.querySelectorAll(".imagen-container img").forEach((img, index) => {
                 img.addEventListener("click", () => {
                     const producto = productosConStock[index]; // Obtener producto correspondiente
-                    if (!listaSeleccionados.some(p => p.id === producto.id)) { // Evitar duplicados
-                        listaSeleccionados.push(producto);
-                        renderListaSeleccionados();
-                    }
+                    listaSeleccionados.push(producto); // Permitir duplicados
+                    renderListaSeleccionados();
                 });
             });
         }
+
+        // Asegurar que la lista permita scroll
+        const listaSeleccionadosDiv = document.getElementById("lista-seleccionados");
+        listaSeleccionadosDiv.style.overflowY = "scroll"; // Habilitar scroll vertical
+        listaSeleccionadosDiv.style.maxHeight = "300px"; // Limitar altura máxima
 
         // Llamar a la función después de renderizar el catálogo
         asignarEventosImagenes();
@@ -675,10 +678,8 @@
     document.querySelectorAll(".imagen-container img").forEach((img, index) => {
         img.addEventListener("click", () => {
             const producto = productosConStock[index]; // Obtener producto correspondiente
-            if (!listaSeleccionados.some(p => p.id === producto.id)) { // Evitar duplicados
-                listaSeleccionados.push(producto);
-                renderListaSeleccionados();
-            }
+            listaSeleccionados.push(producto); // Permitir duplicados
+            renderListaSeleccionados();
         });
     });
     
