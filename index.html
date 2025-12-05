@@ -5,23 +5,307 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Natu Helados</title>
 
-    <link rel="stylesheet" href="./styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+        }
 
-    <!-- CSP estricta -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;">
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* Contenedor de filtros */
+        .filtros {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .filtro-btn {
+            padding: 12px 24px;
+            background: #fff;
+            border: 2px solid #4CAF50;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .filtro-btn:hover {
+            background: #f0f9f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .filtro-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #45a049;
+        }
+
+        /* Encabezados de grupo */
+        .grupo-header {
+            width: 100%;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 40px 0 20px 0;
+            font-size: 1.4rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 3px solid white;
+        }
+
+        /* Contenedor principal del catálogo */
+        .catalogo {
+            display: flex;
+            flex-direction: column;
+            gap: 0; /* Sin gap entre items, solo márgenes individuales */
+            padding: 10px 0;
+            background: #f0f0f0;
+            border-radius: 12px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        /* Tarjetas con ancho 100% y márgenes de 50px */
+        .item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #e0e0e0;
+            overflow: hidden;
+            margin: 50px; /* MARGEN DE 50px EN LOS 4 LADOS */
+            width: calc(100% - 100px); /* Ancho 100% menos los 50px de cada lado */
+        }
+
+        .item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-color: #4CAF50;
+        }
+
+        /* Contenedor de imagen RESPONSIVE */
+        .imagen-container {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 7.5px; /* Reducido de 15px a 7.5px */
+            background: #f9f9f9;
+        }
+
+        /* Mantener proporción 1:1 (cuadrado) */
+        .imagen-container::before {
+            content: '';
+            display: block;
+            padding-top: 100%; /* Proporción 1:1 (cuadrado) */
+        }
+
+        .item img {
+            position: absolute;
+            text-align: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Mantiene la proporción sin recortar */
+            display: block;
+            transition: transform 0.3s ease;
+            padding-top: 30px; /* Agregado 30px de padding superior */
+        }
+
+        .item:hover img {
+            transform: scale(1.05);
+        }
+
+        .titulo {
+            margin-top: auto;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.4;
+            padding: 5px 0;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .id-producto {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            background: #4CAF50;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-right: 10px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            align-self: center; /* Cambiado de flex-start a center */
+        }
+
+        .nombre-producto {
+            display: block;
+            margin-top: 5px;
+            line-height: 1.3;
+        }
+
+        .mensaje-vacio {<span class="id-producto">#${producto.id}</span>
+            width: calc(100% - 100px); /* Igual que las tarjetas */
+            text-align: center;
+            padding: 50px;
+            background: white;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            color: #666;
+            margin: 50px; /* MARGEN DE 50px EN LOS 4 LADOS */
+            border: 2px dashed #ddd;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* Para asegurar que todos los items tengan la misma altura */
+        .item > * {
+            flex-shrink: 0;
+        }
+        
+        /* Separación adicional alrededor del contenedor */
+        .contenedor-principal {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Ajustes responsivos */
+        @media (max-width: 768px) {
+            .item {
+                margin: 40px; /* Reducir márgenes en tablet */
+                width: calc(100% - 80px); /* Ajustar ancho */
+                padding: 15px;
+            }
+            
+            .mensaje-vacio {
+                margin: 40px;
+                width: calc(100% - 80px);
+                padding: 40px;
+            }
+            
+            .titulo {
+                font-size: 1rem;
+                min-height: 50px;
+                text-align: center;
+            }
+            
+            .grupo-header {
+                font-size: 1.2rem;
+                margin: 30px 0 15px 0;
+                padding: 12px 15px;
+            }
+            
+            .filtro-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .item {
+                margin: 25px; /* Reducir márgenes en móviles */
+                width: calc(100% - 50px); /* Ajustar ancho */
+                padding: 12px;
+            }
+            
+            .mensaje-vacio {
+                margin: 25px;
+                width: calc(100% - 50px);
+                padding: 30px;
+            }
+            
+            .imagen-container::before {
+                padding-top: 100%;
+            }
+            
+            .titulo {
+                font-size: 0.95rem;
+                min-height: 45px;
+                text-align: center;
+            }
+            
+            .id-producto {
+                padding: 3px 8px;
+                font-size: 0.85rem;
+            }
+            
+            .filtros {
+                gap: 8px;
+            }
+            
+            .filtro-btn {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            
+            .grupo-header {
+                margin: 25px 0 15px 0;
+                padding: 10px 12px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .item {
+                margin: 20px; /* Márgenes mínimos */
+                width: calc(100% - 40px);
+                padding: 10px;
+            }
+            
+            .mensaje-vacio {
+                margin: 20px;
+                width: calc(100% - 40px);
+                padding: 20px;
+            }
+            
+            .titulo {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+        }
+    </style>
+
 </head>
-
 <body>
 
 <div class="contenedor-principal">
-    <h1>
-        <a href="#" id="abrir-modal" style="text-decoration: none; color: inherit;">N</a>atu Helados 
-    </h1>
-    
-    <h2>* Ice Cream ***</h2>
+    <h1>Natu Helados</h1>
+    <h2>Ice Cream</h2>
 
     <!-- Filtros -->
-    <div class="filtros" id="filtros-container">
+    <div class="filtros">
         <button class="filtro-btn active" data-grupo="Todos">🍦 TODOS</button>
         <button class="filtro-btn" data-grupo="Cremoso">🍨 CREMOSOS</button>
         <button class="filtro-btn" data-grupo="FullCremoso">🎂 FULL CREMOSOS</button>
@@ -29,143 +313,328 @@
     </div>
 
     <div id="catalogo" class="catalogo"></div>
-
-    <!-- Contenedor para la lista en el cuadrante IV -->
-    <div id="lista-seleccionados" style="position: fixed; bottom: 20px; right: 20px; width: 300px; background: #fff; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 10px; overflow-y: auto; max-height: 300px;">
-        <h3>
-          <a href="#" id="calcular-total" style="text-decoration: none; color: inherit;">S</a>eleccionados
-        </h3>
-        <ul id="lista-productos" style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem;"></ul>
-    </div>
-
-    <!-- Modal para la Tasa BCV -->
-    <div id="modal-bcv" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); padding: 20px; z-index: 1000; width: 300px; text-align: center;">
-        <label for="tasa-bcv" style="display: block; margin-bottom: 10px; font-weight: bold;">Tasa BCV</label>
-        <input type="text" id="tasa-bcv" style="width: 100%; padding: 8px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px;">
-        <button id="grabar-tasa-btn" style="width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 10px;">Grabar</button>
-        <button id="cerrar-modal-btn" style="width: 100%; padding: 10px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">Cerrar</button>
-    </div>
 </div>
 
-<!-- ================= SCRIPT UNIFICADO ================= -->
 <script>
-// =================== LISTA DE PRODUCTOS ===================
-const productos = [
-    {id:1, nombre:"PARCHITA CREMOSA", grupo:"Cremoso", stock:1, imagen:"./outputs/small/parchitacremosa_400.webp"},
-    {id:2, nombre:"PIÑA CREMOSA", grupo:"Cremoso", stock:1, imagen:"./outputs/small/piñacremosa_400.webp"},
-    {id:3, nombre:"DURAZNO CREMOSO", grupo:"Cremoso", stock:1, imagen:"./outputs/small/duraznocremoso_400.webp"},
-    {id:4, nombre:"FRESA", grupo:"Cremoso", stock:1, imagen:"./outputs/small/fresa_400.webp"},
-    {id:5, nombre:"GUANA-GUANA", grupo:"FullCremoso", stock:1, imagen:"./outputs/small/guanaguana_400.webp"},
-    {id:6, nombre:"OREO CREMITA", grupo:"FullCremoso", stock:1, imagen:"./outputs/small/oreocremita_400.webp"},
-    {id:7, nombre:"PIE PARCHITA", grupo:"FullCremoso", stock:1, imagen:"./outputs/small/pieparchita_400.webp"},
-    {id:8, nombre:"PIE NARANJA", grupo:"FullCremoso", stock:1, imagen:"./outputs/small/pienaranja_400.webp"},
-    {id:0, nombre:"11-VAINILLA, 10-DALMATA, 9-CHOCO OREO", grupo:"Premium", stock:1, imagen:"./outputs/small/pastelados_400.webp"}
-];
-
-// =================== VARIABLES ===================
-const listaSeleccionados = [];
-const precioTipo = { "Cremoso":0.5, "FullCremoso":0.7, "Premium":1.0, "Ninguno":0.3 };
-const productosConStock = productos.filter(p=>p.stock>0);
-
-// =================== FUNCIONES ===================
-
-// Render lista seleccionados
-function renderListaSeleccionados(){
-    const ul = document.getElementById("lista-productos");
-    ul.innerHTML="";
-    listaSeleccionados.forEach((p,i)=>{
-        const li = document.createElement("li");
-        li.textContent = `#${p.id} - ${p.nombre}`;
-        const btn = document.createElement("button");
-        btn.textContent="Eliminar";
-        btn.style.marginLeft="10px";
-        btn.style.background="#ff4d4d";
-        btn.style.color="white";
-        btn.style.border="none";
-        btn.style.borderRadius="5px";
-        btn.style.cursor="pointer";
-        btn.addEventListener("click", ()=>{
-            listaSeleccionados.splice(i,1);
-            renderListaSeleccionados();
-        });
-        li.appendChild(btn);
-        ul.appendChild(li);
+    document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
     });
-}
-
-// Calcular total
-function calcularTotal(){
-    if(listaSeleccionados.length===0){
-        alert("Total: $0\nTotal Bs: 0");
-        return;
-    }
-    let total=0;
-    listaSeleccionados.forEach(p=>total+=precioTipo[p.grupo]||0);
-    const tasa=parseFloat(localStorage.getItem('tasa'))||0;
-    const totalBs=total*tasa;
-    alert(`Total: $${total.toFixed(2)}\nTotal Bs: ${totalBs.toFixed(2)}`);
-}
-
-// Modal
-function mostrarModal(){
-    const tasa = localStorage.getItem('tasa')||'';
-    document.getElementById('tasa-bcv').value=tasa;
-    document.getElementById('modal-bcv').style.display='block';
-}
-function cerrarModal(){ document.getElementById('modal-bcv').style.display='none'; }
-function grabarTasa(){
-    const tasa = document.getElementById('tasa-bcv').value;
-    localStorage.setItem('tasa', tasa);
-    alert(`Tasa BCV grabada: ${tasa}`);
-    cerrarModal();
-}
-
-// Asignar eventos a las imágenes
-function asignarEventosImagenes(productosMostrados){
-    document.querySelectorAll(".imagen-container img").forEach((img,index)=>{
-        img.addEventListener("click",()=>{
-            const p = productosMostrados[index];
-            listaSeleccionados.push({id:p.id,nombre:p.nombre,grupo:p.grupo});
-            renderListaSeleccionados();
-        });
-    });
-}
-
-// Renderizar catálogo
-function renderCatalogo(grupo){
-    const catalogo = document.getElementById("catalogo");
-    catalogo.innerHTML="";
-    const productosFiltrados = grupo==="Todos"?productosConStock:productosConStock.filter(p=>p.grupo===grupo);
-    productosFiltrados.forEach(p=>{
-        const div = document.createElement("div");
-        div.className="imagen-container";
-        div.innerHTML=`<img src="${p.imagen}" alt="${p.nombre}" style="width:100px;height:100px;cursor:pointer;"><div>${p.nombre}</div>`;
-        catalogo.appendChild(div);
-    });
-    asignarEventosImagenes(productosFiltrados);
-}
-
-// =================== EVENT LISTENERS ===================
-document.getElementById("abrir-modal").addEventListener("click",mostrarModal);
-document.getElementById("cerrar-modal-btn").addEventListener("click",cerrarModal);
-document.getElementById("grabar-tasa-btn").addEventListener("click",grabarTasa);
-document.getElementById("calcular-total").addEventListener("click",calcularTotal);
-
-// Filtros
-document.querySelectorAll(".filtro-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-        document.querySelectorAll(".filtro-btn").forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        renderCatalogo(btn.dataset.grupo);
-    });
-});
-
-// Inicializar catálogo completo
-renderCatalogo("Todos");
-
-// Bloqueo menú contextual
-document.addEventListener("contextmenu",e=>e.preventDefault());
-
 </script>
+
+<!-- ============ JSON válido con strings ============ -->
+<script id="data-json" type="application/json">
+{
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "PARCHITA CREMOSA",
+      "grupo": "Cremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/parchitacremosa_400.webp"
+    },
+    {
+      "id": 2,
+      "nombre": "PIÑA CREMOSA",
+      "grupo": "Cremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/piñacremosa_400.webp"
+    },
+    {
+      "id": 3,
+      "nombre": "DURAZNO CREMOSO",
+      "grupo": "Cremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/duraznocremoso_400.webp"
+    },
+    {
+      "id": 4,
+      "nombre": "FRESA",
+      "grupo": "Cremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/fresa_400.webp"
+    },
+    {
+      "id": 5,
+      "nombre": "GUANA-GUANA",
+      "grupo": "FullCremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/guanaguana_400.webp"
+    },
+    {
+      "id": 6,
+      "nombre": "OREO CREMITA",
+      "grupo": "FullCremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/oreocremita_400.webp"
+    },
+    {
+      "id": 7,
+      "nombre": "PIE PARCHITA",
+      "grupo": "FullCremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/pieparchita_400.webp"
+    },
+    {
+      "id": 8,
+      "nombre": "PIE NARANJA",
+      "grupo": "FullCremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/pienaranja_400.webp"
+    },
+    {
+      "id": 0,
+      "nombre": "11-VAINILLA, 10-DALMATA, 9-CHOCO OREO",
+      "grupo": "Premium",
+      "stock": 1,
+      "imagen": "./outputs/small/pastelados_400.webp"
+    },
+    {
+      "id": 0,
+      "nombre": "?",
+      "grupo": "Premium",
+      "stock": 0,
+      "imagen": "./outputs/small/pastela2_400.webp"
+    },
+    {
+      "id": 9,
+      "nombre": "CHOCO OREO",
+      "grupo": "Premium",
+      "stock": 0,
+      "imagen": "./outputs/small/_chocooreo_400.webp"
+    },
+    {
+      "id": 10,
+      "nombre": "DALMATA",
+      "grupo": "Premium",
+      "stock": 0,
+      "imagen": "./outputs/small/_dalmata_400.webp"
+    },
+    {
+      "id": 11,
+      "nombre": "VAINILLA",
+      "grupo": "Premium",
+      "stock": 0,
+      "imagen": "./outputs/small/_vainilla_400.webp"
+    },
+    {
+      "id": 12,
+      "nombre": "COCO",
+      "grupo": "FullCremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/coco_400.webp"
+    },
+    {
+      "id": 13,
+      "nombre": "PIE LIMON",
+      "grupo": "FullCremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/pielimon_400.webp"
+    },
+    {
+      "id": 14,
+      "nombre": "CHOKO MILK",
+      "grupo": "FullCremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/chokomilk_400.webp"
+    },
+    {
+      "id": 15,
+      "nombre": "AGUACATE",
+      "grupo": "Cremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/aguacate_400.webp"
+    },
+    {
+      "id": 16,
+      "nombre": "MANI CREMOSO",
+      "grupo": "Cremoso",
+      "stock": 1,
+      "imagen": "./outputs/small/manicremoso_400.webp"
+    },
+    {
+      "id": 17,
+      "nombre": "",
+      "grupo": "any",
+      "stock": 0,
+      "imagen": "./outputs/small/_fresablanco_400.webp"
+    },
+    {
+      "id": 18,
+      "nombre": "TAMARINDO",
+      "grupo": "Ninguno",
+      "stock": 0,
+      "imagen": "./outputs/small/tamarindo_400.webp"
+    },
+    {
+      "id": 19,
+      "nombre": "RON CON PASAS",
+      "grupo": "Ninguno",
+      "stock": 0,
+      "imagen": "./outputs/small/ronconpasas_400.webp"
+    },
+    {
+      "id": 20,
+      "nombre": "NATUGOMITAS",
+      "grupo": "Ninguno",
+      "stock": 0,
+      "imagen": "./outputs/small/natugomitas_400.webp"
+    },
+    {
+      "id": 21,
+      "nombre": "MORA CREMOSA",
+      "grupo": "Ninguno",
+      "stock": 0,
+      "imagen": "./outputs/small/moracremosa_400.webp"
+    },
+    {
+      "id": 22,
+      "nombre": "CAFE LATTE",
+      "grupo": "Ninguno",
+      "stock": 0,
+      "imagen": "./outputs/small/cafelatte_400.webp"
+    },
+    {
+      "id": 23,
+      "nombre": "CHOCO LIGHT",
+      "grupo": "Ninguno",
+      "stock": 0,
+      "imagen": "./outputs/small/chocolight_400.webp"
+    },
+    {
+      "id": 24,
+      "nombre": "TAMARINDO CITRICO",
+      "grupo": "Ninguno",
+      "stock": 0,
+      "imagen": "./outputs/small/tamarindocitrico_400.webp"
+    },
+    {
+      "id": 25,
+      "nombre": "COCOSETTE",
+      "grupo": "Ninguno",
+      "stock": 0,
+      "imagen": "./outputs/small/cocosette_400.webp"
+    },
+    {
+      "id": 26,
+      "nombre": "CHOCO SUSSY",
+      "grupo": "Ninguno",
+      "stock": 0,
+      "imagen": "./outputs/small/chocosussy_400.webp"
+    }
+  ]
+}
+</script>
+
+<!-- ============ JavaScript que renderiza el catálogo ============ -->
+<script>
+    // Tomar el JSON embebido
+    const data = JSON.parse(document.getElementById("data-json").textContent);
+    const catalogoDiv = document.getElementById("catalogo");
+    let filtroActual = "Todos";
+    
+    // Obtener todos los productos con stock > 0
+    const productosConStock = data.productos.filter(producto => producto.stock > 0);
+    
+    // Función para renderizar el catálogo con filtro
+    function renderCatalogo(filtro = "Todos") {
+        filtroActual = filtro;
+        
+        // Limpiar catálogo
+        catalogoDiv.innerHTML = "";
+        
+        // Actualizar botones activos
+        document.querySelectorAll('.filtro-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.grupo === filtro) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Filtrar productos según el filtro seleccionado
+        let productosFiltrados;
+        if (filtro === "Todos") {
+            productosFiltrados = productosConStock;
+        } else {
+            productosFiltrados = productosConStock.filter(producto => producto.grupo === filtro);
+        }
+        
+        // Si no hay productos con el filtro actual
+        if (productosFiltrados.length === 0) {
+            const mensaje = document.createElement('div');
+            mensaje.className = 'mensaje-vacio';
+            mensaje.textContent = `No hay productos disponibles en el grupo ${filtro}`;
+            catalogoDiv.appendChild(mensaje);
+            return;
+        }
+        
+        // Ordenar por grupo (solo si es "Todos")
+        if (filtro === "Todos") {
+            productosFiltrados.sort((a, b) => a.grupo.localeCompare(b.grupo));
+        }
+        
+        // Variables para controlar encabezados de grupo
+        let currentGroup = null;
+        
+        productosFiltrados.forEach(producto => {
+            // Si estamos mostrando "Todos", agregar encabezado de grupo cuando cambia
+            if (filtro === "Todos" && producto.grupo !== currentGroup) {
+                currentGroup = producto.grupo;
+                const groupHeader = document.createElement("div");
+                groupHeader.className = "grupo-header";
+                
+                // Personalizar según el grupo
+                let icono = "";
+                if (currentGroup === "Cremoso") icono = "🍨";
+                else if (currentGroup === "FullCremoso") icono = "🎂";
+                else if (currentGroup === "Premium") icono = "⭐";
+                else if (currentGroup === "Ninguno") icono = "❓";
+                
+                groupHeader.textContent = `${icono} ${currentGroup} ${icono}`;
+                catalogoDiv.appendChild(groupHeader);
+            }
+            
+            // Crear el elemento del producto
+            const item = document.createElement("div");
+            item.className = "item";
+            
+            // Determinar emoji según grupo
+            let grupoEmoji = "";
+            if (producto.grupo === "Cremoso") grupoEmoji = "🍨";
+            else if (producto.grupo === "FullCremoso") grupoEmoji = "🎂";
+            else if (producto.grupo === "Premium") grupoEmoji = "⭐";
+            else if (producto.grupo === "Ninguno") grupoEmoji = "❓";
+            
+            item.innerHTML = `
+                <div class="imagen-container">
+                    <picture>
+                        <source srcset="${producto.imagen}" type="image/webp" />
+                        <img src="${producto.imagen.replace('.webp','.jpg')}" alt="${producto.nombre}" loading="lazy">
+                    </picture>
+                </div>
+                
+                <div class="titulo">
+                    <span class="id-producto">#${producto.id}</span>
+                    <!--
+                       <span class="nombre-producto">${grupoEmoji} ${producto.nombre}</span>
+                    -->
+                </div>
+            `;
+            
+            catalogoDiv.appendChild(item);
+        });
+    }
+    
+    // Configurar eventos de los botones de filtro
+    document.querySelectorAll('.filtro-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const grupo = this.dataset.grupo;
+            renderCatalogo(grupo);
+        });
+    });
+    
+    // Renderizar inicialmente con filtro "Todos"
+    renderCatalogo("Todos");
+</script>
+
 </body>
 </html>
