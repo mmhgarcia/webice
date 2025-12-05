@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="./styles.css">
 
+    <!-- CSP estricta -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;">
 </head>
 
@@ -14,13 +15,13 @@
 
 <div class="contenedor-principal">
     <h1>
-        <a href="#" onclick="mostrarModal();" style="text-decoration: none; color: inherit;">N</a>atu Helados 
+        <a href="#" id="abrir-modal" style="text-decoration: none; color: inherit;">N</a>atu Helados 
     </h1>
     
     <h2>* Ice Cream ***</h2>
 
     <!-- Filtros -->
-    <div class="filtros">
+    <div class="filtros" id="filtros-container">
         <button class="filtro-btn active" data-grupo="Todos">🍦 TODOS</button>
         <button class="filtro-btn" data-grupo="Cremoso">🍨 CREMOSOS</button>
         <button class="filtro-btn" data-grupo="FullCremoso">🎂 FULL CREMOSOS</button>
@@ -32,7 +33,7 @@
     <!-- Contenedor para la lista en el cuadrante IV -->
     <div id="lista-seleccionados" style="position: fixed; bottom: 20px; right: 20px; width: 300px; background: #fff; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 10px; overflow-y: auto; max-height: 300px;">
         <h3>
-          <a href="#" onclick="calcularTotal();" style="text-decoration: none; color: inherit;">S</a>eleccionados
+          <a href="#" id="calcular-total" style="text-decoration: none; color: inherit;">S</a>eleccionados
         </h3>
         <ul id="lista-productos" style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem;"></ul>
     </div>
@@ -41,18 +42,12 @@
     <div id="modal-bcv" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); padding: 20px; z-index: 1000; width: 300px; text-align: center;">
         <label for="tasa-bcv" style="display: block; margin-bottom: 10px; font-weight: bold;">Tasa BCV</label>
         <input type="text" id="tasa-bcv" style="width: 100%; padding: 8px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px;">
-        <button onclick="grabarTasa()" style="width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 10px;">Grabar</button>
-        <button onclick="cerrarModal()" style="width: 100%; padding: 10px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">Cerrar</button>
+        <button id="grabar-tasa-btn" style="width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 10px;">Grabar</button>
+        <button id="cerrar-modal-btn" style="width: 100%; padding: 10px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">Cerrar</button>
     </div>
 </div>
 
-<script>
-    document.addEventListener("contextmenu", function (e) {
-        e.preventDefault();
-    });
-</script>
-
-<!-- ============ JavaScript que renderiza el catálogo ============ -->
+<!-- Script principal cargado como módulo -->
 <script type="module" src="./scripts.js"></script>
 
 </body>

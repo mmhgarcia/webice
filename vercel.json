@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "name": "natu-helados",
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "scripts.js", "use": "@vercel/static" },
+    { "src": "productos.js", "use": "@vercel/static" },
+    { "src": "styles.css", "use": "@vercel/static" },
+    { "src": "outputs/small/*", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
