@@ -667,9 +667,25 @@
     // Función para renderizar la lista de productos seleccionados
     function renderListaSeleccionados() {
         listaProductosUl.innerHTML = ""; // Limpiar lista
-        listaSeleccionados.forEach(producto => {
+        listaSeleccionados.forEach((producto, index) => {
             const li = document.createElement("li");
             li.textContent = `#${producto.id} - ${producto.nombre}`;
+
+            // Botón para eliminar el producto
+            const eliminarBtn = document.createElement("button");
+            eliminarBtn.textContent = "Eliminar";
+            eliminarBtn.style.marginLeft = "10px";
+            eliminarBtn.style.background = "#ff4d4d";
+            eliminarBtn.style.color = "white";
+            eliminarBtn.style.border = "none";
+            eliminarBtn.style.borderRadius = "5px";
+            eliminarBtn.style.cursor = "pointer";
+            eliminarBtn.addEventListener("click", () => {
+                listaSeleccionados.splice(index, 1); // Eliminar producto de la lista
+                renderListaSeleccionados(); // Volver a renderizar
+            });
+
+            li.appendChild(eliminarBtn);
             listaProductosUl.appendChild(li);
         });
     }
