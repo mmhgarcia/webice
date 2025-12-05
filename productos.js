@@ -1,3 +1,4 @@
+
 // Archivo separado para la lista de productos
 const productos = [
     {

@@ -2,6 +2,7 @@ import productos from './productos.js';
 
 // Archivo separado para las funciones de la página
 
+
 // Lista para almacenar los productos seleccionados
 const listaSeleccionados = [];
 
