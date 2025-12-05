@@ -785,7 +785,7 @@
     // Función para calcular el total de los productos seleccionados
     function calcularTotal() {
         if (listaSeleccionados.length === 0) {
-            alert("Total: $0");
+            alert("Total: $0\nTotal Bs: 0");
             return;
         }
 
@@ -795,7 +795,10 @@
             total += precio; // Sumar al total
         });
 
-        alert(`Total: $${total.toFixed(2)}`); // Mostrar total con dos decimales
+        const tasa = parseFloat(localStorage.getItem('tasa')) || 0; // Obtener la tasa del localStorage
+        const totalBs = total * tasa; // Calcular el total en Bs
+
+        alert(`Total: $${total.toFixed(2)}\nTotal Bs: ${totalBs.toFixed(2)}`); // Mostrar ambos totales
     }
 
     // Asociar el cálculo del total al clic en la letra H
