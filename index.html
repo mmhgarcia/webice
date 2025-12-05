@@ -798,7 +798,7 @@
         const tasa = parseFloat(localStorage.getItem('tasa')) || 0; // Obtener la tasa del localStorage
         const totalBs = total * tasa; // Calcular el total en Bs
 
-        alert(`Total: $${total.toFixed(2)}\nTotal Bs: ${totalBs.toFixed(2)}`); // Mostrar ambos totales
+        alert(`Tasa BCV: $${tasa.toFixed(2)}\nTotal: $${total.toFixed(2)}\nTotal Bs: ${totalBs.toFixed(2)}`); // Mostrar ambos totales
     }
 
     // Asociar el cálculo del total al clic en la letra H
