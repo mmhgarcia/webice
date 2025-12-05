@@ -47,8 +47,125 @@
     </div>
 </div>
 
-<!-- Script principal cargado como módulo -->
-<script type="module" src="./scripts.js"></script>
+<!-- ================= SCRIPT UNIFICADO ================= -->
+<script>
+// =================== LISTA DE PRODUCTOS ===================
+const productos = [
+    {id:1, nombre:"PARCHITA CREMOSA", grupo:"Cremoso", stock:1, imagen:"./outputs/small/parchitacremosa_400.webp"},
+    {id:2, nombre:"PIÑA CREMOSA", grupo:"Cremoso", stock:1, imagen:"./outputs/small/piñacremosa_400.webp"},
+    {id:3, nombre:"DURAZNO CREMOSO", grupo:"Cremoso", stock:1, imagen:"./outputs/small/duraznocremoso_400.webp"},
+    {id:4, nombre:"FRESA", grupo:"Cremoso", stock:1, imagen:"./outputs/small/fresa_400.webp"},
+    {id:5, nombre:"GUANA-GUANA", grupo:"FullCremoso", stock:1, imagen:"./outputs/small/guanaguana_400.webp"},
+    {id:6, nombre:"OREO CREMITA", grupo:"FullCremoso", stock:1, imagen:"./outputs/small/oreocremita_400.webp"},
+    {id:7, nombre:"PIE PARCHITA", grupo:"FullCremoso", stock:1, imagen:"./outputs/small/pieparchita_400.webp"},
+    {id:8, nombre:"PIE NARANJA", grupo:"FullCremoso", stock:1, imagen:"./outputs/small/pienaranja_400.webp"},
+    {id:0, nombre:"11-VAINILLA, 10-DALMATA, 9-CHOCO OREO", grupo:"Premium", stock:1, imagen:"./outputs/small/pastelados_400.webp"}
+];
 
+// =================== VARIABLES ===================
+const listaSeleccionados = [];
+const precioTipo = { "Cremoso":0.5, "FullCremoso":0.7, "Premium":1.0, "Ninguno":0.3 };
+const productosConStock = productos.filter(p=>p.stock>0);
+
+// =================== FUNCIONES ===================
+
+// Render lista seleccionados
+function renderListaSeleccionados(){
+    const ul = document.getElementById("lista-productos");
+    ul.innerHTML="";
+    listaSeleccionados.forEach((p,i)=>{
+        const li = document.createElement("li");
+        li.textContent = `#${p.id} - ${p.nombre}`;
+        const btn = document.createElement("button");
+        btn.textContent="Eliminar";
+        btn.style.marginLeft="10px";
+        btn.style.background="#ff4d4d";
+        btn.style.color="white";
+        btn.style.border="none";
+        btn.style.borderRadius="5px";
+        btn.style.cursor="pointer";
+        btn.addEventListener("click", ()=>{
+            listaSeleccionados.splice(i,1);
+            renderListaSeleccionados();
+        });
+        li.appendChild(btn);
+        ul.appendChild(li);
+    });
+}
+
+// Calcular total
+function calcularTotal(){
+    if(listaSeleccionados.length===0){
+        alert("Total: $0\nTotal Bs: 0");
+        return;
+    }
+    let total=0;
+    listaSeleccionados.forEach(p=>total+=precioTipo[p.grupo]||0);
+    const tasa=parseFloat(localStorage.getItem('tasa'))||0;
+    const totalBs=total*tasa;
+    alert(`Total: $${total.toFixed(2)}\nTotal Bs: ${totalBs.toFixed(2)}`);
+}
+
+// Modal
+function mostrarModal(){
+    const tasa = localStorage.getItem('tasa')||'';
+    document.getElementById('tasa-bcv').value=tasa;
+    document.getElementById('modal-bcv').style.display='block';
+}
+function cerrarModal(){ document.getElementById('modal-bcv').style.display='none'; }
+function grabarTasa(){
+    const tasa = document.getElementById('tasa-bcv').value;
+    localStorage.setItem('tasa', tasa);
+    alert(`Tasa BCV grabada: ${tasa}`);
+    cerrarModal();
+}
+
+// Asignar eventos a las imágenes
+function asignarEventosImagenes(productosMostrados){
+    document.querySelectorAll(".imagen-container img").forEach((img,index)=>{
+        img.addEventListener("click",()=>{
+            const p = productosMostrados[index];
+            listaSeleccionados.push({id:p.id,nombre:p.nombre,grupo:p.grupo});
+            renderListaSeleccionados();
+        });
+    });
+}
+
+// Renderizar catálogo
+function renderCatalogo(grupo){
+    const catalogo = document.getElementById("catalogo");
+    catalogo.innerHTML="";
+    const productosFiltrados = grupo==="Todos"?productosConStock:productosConStock.filter(p=>p.grupo===grupo);
+    productosFiltrados.forEach(p=>{
+        const div = document.createElement("div");
+        div.className="imagen-container";
+        div.innerHTML=`<img src="${p.imagen}" alt="${p.nombre}" style="width:100px;height:100px;cursor:pointer;"><div>${p.nombre}</div>`;
+        catalogo.appendChild(div);
+    });
+    asignarEventosImagenes(productosFiltrados);
+}
+
+// =================== EVENT LISTENERS ===================
+document.getElementById("abrir-modal").addEventListener("click",mostrarModal);
+document.getElementById("cerrar-modal-btn").addEventListener("click",cerrarModal);
+document.getElementById("grabar-tasa-btn").addEventListener("click",grabarTasa);
+document.getElementById("calcular-total").addEventListener("click",calcularTotal);
+
+// Filtros
+document.querySelectorAll(".filtro-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+        document.querySelectorAll(".filtro-btn").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        renderCatalogo(btn.dataset.grupo);
+    });
+});
+
+// Inicializar catálogo completo
+renderCatalogo("Todos");
+
+// Bloqueo menú contextual
+document.addEventListener("contextmenu",e=>e.preventDefault());
+
+</script>
 </body>
 </html>
