@@ -313,6 +313,12 @@
     </div>
 
     <div id="catalogo" class="catalogo"></div>
+
+    <!-- Contenedor para la lista en el cuadrante IV -->
+    <div id="lista-seleccionados" style="position: fixed; bottom: 20px; right: 20px; width: 300px; background: #fff; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 10px; overflow-y: auto; max-height: 300px;">
+        <h3 style="margin: 0 0 10px; font-size: 1.2rem;">Seleccionados</h3>
+        <ul id="lista-productos" style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem;"></ul>
+    </div>
 </div>
 
 <script>
@@ -530,6 +536,7 @@
     // Tomar el JSON embebido
     const data = JSON.parse(document.getElementById("data-json").textContent);
     const catalogoDiv = document.getElementById("catalogo");
+    const listaProductosDiv = document.getElementById("lista-productos");
     let filtroActual = "Todos";
     
     // Obtener todos los productos con stock > 0
@@ -629,6 +636,33 @@
         btn.addEventListener('click', function() {
             const grupo = this.dataset.grupo;
             renderCatalogo(grupo);
+        });
+    });
+    
+    // Lista para almacenar los productos seleccionados
+    const listaSeleccionados = [];
+
+    // Contenedor de la lista en el cuadrante IV
+    const listaProductosUl = document.getElementById("lista-productos");
+
+    // Función para renderizar la lista de productos seleccionados
+    function renderListaSeleccionados() {
+        listaProductosUl.innerHTML = ""; // Limpiar lista
+        listaSeleccionados.forEach(producto => {
+            const li = document.createElement("li");
+            li.textContent = `#${producto.id} - ${producto.nombre}`;
+            listaProductosUl.appendChild(li);
+        });
+    }
+
+    // Agregar evento a las imágenes
+    document.querySelectorAll(".imagen-container img").forEach((img, index) => {
+        img.addEventListener("click", () => {
+            const producto = productosConStock[index]; // Obtener producto correspondiente
+            if (!listaSeleccionados.some(p => p.id === producto.id)) { // Evitar duplicados
+                listaSeleccionados.push(producto);
+                renderListaSeleccionados();
+            }
         });
     });
     
