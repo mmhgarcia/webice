@@ -771,7 +771,11 @@
     document.querySelectorAll(".imagen-container img").forEach((img, index) => {
         img.addEventListener("click", () => {
             const producto = productosConStock[index]; // Obtener producto correspondiente
-            listaSeleccionados.push(producto); // Permitir duplicados
+            const productoSeleccionado = {
+                id: producto.id,
+                nombre: producto.nombre
+            };
+            listaSeleccionados.push(productoSeleccionado); // Añadir solo id y nombre
             renderListaSeleccionados();
         });
     });
