@@ -532,7 +532,7 @@
     {
       "id": 17,
       "nombre": "",
-      "grupo": "any",
+      "grupo": "Ninguno",
       "stock": 0,
       "imagen": "./outputs/small/_fresablanco_400.webp"
     },
@@ -774,11 +774,35 @@
     // Renderizar inicialmente con filtro "Todos"
     renderCatalogo("Todos");
 
-    // Funciones para el modal
+    // Constante con los precios por grupo
+    const precioTipo = {
+        "Cremoso": 0.5,
+        "FullCremoso": 0.7,
+        "Premium": 1.0,
+        "Ninguno": 0
+    };
+
+    function calcularTotal() {
+        if (listaSeleccionados.length === 0) {
+            alert("Total: $0");
+            return;
+        }
+
+        let total = 0;
+        listaSeleccionados.forEach(producto => {
+            const precio = precioTipo[producto.grupo] || 0; // Obtener precio según grupo, o 0 si no existe
+            total += precio; // Sumar al total
+        });
+
+        alert(`Total: $${total}`);
+    }
+
+    // Modificar la función mostrarModal para calcular el total
     function mostrarModal() {
-            const tasa = localStorage.getItem('tasa'); // Buscar la clave 'tasa' en localStorage
-            document.getElementById('tasa-bcv').value = tasa ? tasa : ''; // Mostrar el valor si existe, o dejar el campo en blanco
-            document.getElementById('modal-bcv').style.display = 'block';
+        calcularTotal(); // Calcular el total antes de mostrar el modal
+        const tasa = localStorage.getItem('tasa'); // Buscar la clave 'tasa' en localStorage
+        document.getElementById('tasa-bcv').value = tasa ? tasa : ''; // Mostrar el valor si existe, o dejar el campo en blanco
+        document.getElementById('modal-bcv').style.display = 'block';
     }
 
     function cerrarModal() {
