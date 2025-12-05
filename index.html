@@ -770,7 +770,9 @@
 
     // Funciones para el modal
     function mostrarModal() {
-        document.getElementById('modal-bcv').style.display = 'block';
+            const tasa = localStorage.getItem('tasa'); // Buscar la clave 'tasa' en localStorage
+            document.getElementById('tasa-bcv').value = tasa ? tasa : ''; // Mostrar el valor si existe, o dejar el campo en blanco
+            document.getElementById('modal-bcv').style.display = 'block';
     }
 
     function cerrarModal() {
