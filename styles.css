@@ -1,0 +1,355 @@
+/* Archivo separado para los estilos CSS */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f4f4f4;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Contenedor de filtros */
+.filtros {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.filtro-btn {
+    padding: 12px 24px;
+    background: #fff;
+    border: 2px solid #4CAF50;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    color: #333;
+}
+
+.filtro-btn:hover {
+    background: #f0f9f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.filtro-btn.active {
+    background: #4CAF50;
+    color: white;
+    border-color: #45a049;
+}
+
+/* Encabezados de grupo */
+.grupo-header {
+    width: 100%;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin: 40px 0 20px 0;
+    font-size: 1.4rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 3px solid white;
+}
+
+/* Contenedor principal del catálogo */
+.catalogo {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Sin gap entre items, solo márgenes individuales */
+    padding: 10px 0;
+    background: #f0f0f0;
+    border-radius: 12px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+
+/* Tarjetas con ancho 100% y márgenes de 50px */
+.item {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #e0e0e0;
+    overflow: hidden;
+    margin: 50px; /* MARGEN DE 50px EN LOS 4 LADOS */
+    width: calc(100% - 100px); /* Ancho 100% menos los 50px de cada lado */
+}
+
+.item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border-color: #4CAF50;
+}
+
+/* Contenedor de imagen RESPONSIVE */
+.imagen-container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 7.5px; /* Reducido de 15px a 7.5px */
+    background: #f9f9f9;
+}
+
+/* Mantener proporción 1:1 (cuadrado) */
+.imagen-container::before {
+    content: '';
+    display: block;
+    padding-top: 100%; /* Proporción 1:1 (cuadrado) */
+}
+
+.item img {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Mantiene la proporción sin recortar */
+    display: block;
+    transition: transform 0.3s ease;
+    padding-top: 30px; /* Agregado 30px de padding superior */
+}
+
+.item:hover img {
+    transform: scale(1.05);
+}
+
+.titulo {
+    margin-top: auto;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.4;
+    padding: 5px 0;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.id-producto {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background: #4CAF50;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    margin-right: 10px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    align-self: center; /* Cambiado de flex-start a center */
+}
+
+.nombre-producto {
+    display: block;
+    margin-top: 5px;
+    line-height: 1.3;
+}
+
+.mensaje-vacio {
+    width: calc(100% - 100px); /* Igual que las tarjetas */
+    text-align: center;
+    padding: 50px;
+    background: white;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    color: #666;
+    margin: 50px; /* MARGEN DE 50px EN LOS 4 LADOS */
+    border: 2px dashed #ddd;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Para asegurar que todos los items tengan la misma altura */
+.item > * {
+    flex-shrink: 0;
+}
+
+/* Separación adicional alrededor del contenedor */
+.contenedor-principal {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .item {
+        margin: 40px; /* Reducir márgenes en tablet */
+        width: calc(100% - 80px); /* Ajustar ancho */
+        padding: 15px;
+    }
+
+    .mensaje-vacio {
+        margin: 40px;
+        width: calc(100% - 80px);
+        padding: 40px;
+    }
+
+    .titulo {
+        font-size: 1rem;
+        min-height: 50px;
+        text-align: center;
+    }
+
+    .grupo-header {
+        font-size: 1.2rem;
+        margin: 30px 0 15px 0;
+        padding: 12px 15px;
+    }
+
+    .filtro-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .item {
+        margin: 25px; /* Reducir márgenes en móviles */
+        width: calc(100% - 50px); /* Ajustar ancho */
+        padding: 12px;
+    }
+
+    .mensaje-vacio {
+        margin: 25px;
+        width: calc(100% - 50px);
+        padding: 30px;
+    }
+
+    .imagen-container::before {
+        padding-top: 100%;
+    }
+
+    .titulo {
+        font-size: 0.95rem;
+        min-height: 45px;
+        text-align: center;
+    }
+
+    .id-producto {
+        padding: 3px 8px;
+        font-size: 0.85rem;
+    }
+
+    .filtros {
+        gap: 8px;
+    }
+
+    .filtro-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    .grupo-header {
+        margin: 25px 0 15px 0;
+        padding: 10px 12px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .item {
+        margin: 20px; /* Márgenes mínimos */
+        width: calc(100% - 40px);
+        padding: 10px;
+    }
+
+    .mensaje-vacio {
+        margin: 20px;
+        width: calc(100% - 40px);
+        padding: 20px;
+    }
+
+    .titulo {
+        font-size: 0.9rem;
+        text-align: center;
+    }
+}
+
+/* Separar verticalmente los elementos de la lista */
+#lista-productos li {
+    margin-bottom: 10px; /* Espaciado entre elementos */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Estilos para el modal */
+#modal-bcv {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    padding: 20px;
+    z-index: 1000;
+    width: 300px;
+    text-align: center;
+}
+
+#modal-bcv label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#modal-bcv input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#modal-bcv button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#modal-bcv button.grabar {
+    background: #4CAF50;
+    color: white;
+}
+
+#modal-bcv button.cerrar {
+    background: #f44336;
+    color: white;
+}
+
+/* Aumentar la fuente de la tasa y ponerla en negrita */
+#tasa-bcv {
+    font-size: 200%; /* Aumentar tamaño de fuente en 100% */
+    font-weight: bold; /* Poner en negrita */
+}
