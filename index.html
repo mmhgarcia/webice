@@ -608,7 +608,7 @@
                 <div class="imagen-container">
                     <picture>
                         <source srcset="${producto.imagen}" type="image/webp" />
-                        <img src="${producto.imagen.replace('.webp','.jpg')}" alt="${producto.nombre}" loading="lazy">
+                        <img src="${producto.imagen.replace('.webp','.jpg')}" alt="${producto.nombre}" loading="lazy" onerror="console.error('Error loading:', this.src, 'for product:', '${producto.nombre}')">
                     </picture>
                 </div>
                 
